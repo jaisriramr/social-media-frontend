@@ -1,14 +1,15 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Logo from "../../../assets/logo.svg";
 import Input from "antd/lib/input";
 import Button from "antd/lib/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import message from "antd/lib/message";
 import { container } from "tsyringe";
 import { AuthService } from "../../../services/auth.service";
 
 const Login = () => {
   const authService = container.resolve(AuthService);
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -25,12 +26,21 @@ const Login = () => {
         hide();
         localStorage.setItem("userToken", response?.token);
         message.success("You have logged in successfully!");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       })
       .catch((err: any) => {
         hide();
         message.error(err?.message);
       });
   }
+
+  useEffect(() => {
+    if (localStorage.getItem("userToken")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <Fragment>
