@@ -29,6 +29,8 @@ const Home = () => {
     queryKey: ["feed", "service"],
     queryFn: () => feedService.getFeedForUser(profile?._id),
     enabled: profile?._id !== undefined,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -118,8 +120,8 @@ const Home = () => {
           </Col>
           <Col className="gutter-row" span={8}>
             <div className="feed-list-container">
-              {data?.map((post: any) => (
-                <ReadPost post={post} />
+              {data?.map((post: any, i: any) => (
+                <ReadPost data={post} key={i} />
               ))}
             </div>
           </Col>

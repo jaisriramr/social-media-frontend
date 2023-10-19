@@ -5,4 +5,9 @@ const profileDetails = atom({
   default: {},
 });
 
-export { profileDetails };
+const postLikesUser = atom({
+  key: "post-user-likes",
+  default: [],
+});
+
+export { profileDetails, postLikesUser };

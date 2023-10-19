@@ -8,4 +8,5 @@ export interface readPost {
   user_id: string;
   _id: string;
   post_user: any;
+  user_liked: any;
 }
