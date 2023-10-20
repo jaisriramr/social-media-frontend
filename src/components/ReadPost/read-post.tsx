@@ -17,6 +17,8 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { postLikesUser, profileDetails } from "../../store/atom";
 import { PostService } from "../../services/post.service";
 import LikedIcon from "../../assets/icons/liked.svg";
+import MuteIcon from "../../assets/icons/mute.svg";
+import UnMuteIcon from "../../assets/icons/unmute.svg";
 
 const ReadPost = ({ data }: { data: readPost }) => {
   const [post, setPost] = useState(data);
@@ -28,6 +30,7 @@ const ReadPost = ({ data }: { data: readPost }) => {
   const resetPostLikes = useResetRecoilState(postLikesUser);
   const [getLikes, setGetLikes] = useState<boolean>(false);
   const userDetails: any = useRecoilValue(profileDetails);
+  const [mute, setMute] = useState<boolean>(true);
 
   const {
     data: LikesData,
@@ -41,6 +44,12 @@ const ReadPost = ({ data }: { data: readPost }) => {
       setPostLikes(data);
     },
   });
+
+  useEffect(() => {
+    return () => {
+      console.log("RRRRR destrtt RRREEADD");
+    };
+  }, []);
 
   function handleLikeOpen() {
     setGetLikes(true);
@@ -86,6 +95,10 @@ const ReadPost = ({ data }: { data: readPost }) => {
       });
   }
 
+  function handleToggleMute() {
+    setMute(!mute);
+  }
+
   return (
     <Fragment>
       <div className="read-post-container">
@@ -96,21 +109,38 @@ const ReadPost = ({ data }: { data: readPost }) => {
               alt="user-profile"
               className="read-post-user-profile"
             />
-            <Link
-              to={`/profile/${post?.post_user[0]?.username}`}
-              className="read-post-username"
-            >
-              {post?.post_user[0]?.username}
-            </Link>
+            <div className="read-post-user-header-bio">
+              <Link
+                to={`/profile/${post?.post_user[0]?.username}`}
+                className="read-post-username"
+              >
+                {post?.post_user[0]?.username}
+              </Link>
+              <label>{post?.location}</label>
+            </div>
           </div>
           <img src={DotIcon} alt="dots" className="read-post-dots" />
         </div>
         <div className="read-post-image-container">
-          <img
-            src={post?.post_url}
-            alt="profile-post"
-            className="read-post-image"
-          />
+          {post?.type == "video/mp4" ? (
+            <video width={414} loop autoPlay muted={mute}>
+              <source src={post?.post_url} type="video/mp4" />
+              Your browser does not support HTML5 video.
+            </video>
+          ) : (
+            <img
+              src={post?.post_url}
+              alt="profile-post"
+              className="read-post-image"
+            />
+          )}
+          <div className="media-mute-control" onClick={handleToggleMute}>
+            {mute ? (
+              <img src={MuteIcon} alt="mute" />
+            ) : (
+              <img src={UnMuteIcon} alt="unmute" />
+            )}
+          </div>
         </div>
         <div className="read-post-actions">
           <div className="read-post-left-action">

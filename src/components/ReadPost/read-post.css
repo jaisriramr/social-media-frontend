@@ -1,3 +1,25 @@
+.read-post-container {
+  position: relative;
+}
+
+.media-mute-control {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000091;
+  border-radius: 40px;
+  width: 24px;
+  height: 24px;
+  right: 10px;
+  bottom: 10px;
+}
+
+.media-mute-control img {
+  height: 16px;
+  width: 16px;
+}
+
 .read-post-user-container {
   display: flex;
   align-items: center;
@@ -12,8 +34,8 @@
 }
 
 .read-post-user-profile {
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
 }
 
 .read-post-username {
@@ -26,6 +48,7 @@
 }
 
 .read-post-image-container {
+  position: relative;
   border: 1px solid #eee;
   display: flex;
   align-items: center;
@@ -118,4 +141,21 @@
 
 .read-post-footer-caption a {
   font-weight: 600;
+}
+
+.read-post-user-header-bio {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}
+
+.read-post-user-header-bio a {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.read-post-user-header-bio label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #747474;
 }

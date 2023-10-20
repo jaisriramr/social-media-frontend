@@ -13,4 +13,8 @@ export class PostService {
   removeLike = async (id: any) => {
     return await this.httpService.delete("/like/remove/" + id);
   };
+
+  createPost = async (query: any) => {
+    return await this.httpService.post(this.namespace + "/create", query);
+  };
 }

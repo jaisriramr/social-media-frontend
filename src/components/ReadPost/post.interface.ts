@@ -9,4 +9,5 @@ export interface readPost {
   _id: string;
   post_user: any;
   user_liked: any;
+  type: any;
 }

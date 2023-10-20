@@ -19,11 +19,13 @@ import { profileDetails } from "../../store/atom";
 import jwtDecode from "jwt-decode";
 import { useQuery } from "react-query";
 import ReadPost from "../../components/ReadPost/read-post";
+import CreatePost from "../../components/CreatePost/create-post";
 
 const Home = () => {
   const feedService = container.resolve(FeedService);
   const navigate = useNavigate();
   const [profile, setProfile] = useRecoilState<any>(profileDetails);
+  const [openCreatePost, setOpenCreatePost] = useState<boolean>(false);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["feed", "service"],
@@ -45,6 +47,10 @@ const Home = () => {
   useEffect(() => {
     console.log(data);
   }, [data]);
+
+  function handleCloseCreatePost() {
+    setOpenCreatePost(false);
+  }
 
   return (
     <Fragment>
@@ -97,7 +103,10 @@ const Home = () => {
                     <img src={NotificationIcon} alt="home" />
                     Notifications
                   </li>
-                  <li className="feed-sidebar-link">
+                  <li
+                    className="feed-sidebar-link"
+                    onClick={() => setOpenCreatePost(true)}
+                  >
                     <img src={CreateIcon} alt="home" />
                     Create
                   </li>
@@ -127,6 +136,10 @@ const Home = () => {
           </Col>
         </Row>
       </div>
+      <CreatePost
+        open={openCreatePost}
+        handleCloseCreatePost={handleCloseCreatePost}
+      />
     </Fragment>
   );
 };
